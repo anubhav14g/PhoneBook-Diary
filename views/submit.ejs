@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="jumbotron centered">
+    <i class="fas fa-key fa-6x"></i>
+    <h1 class="display-3"><strong>Add New Contact</strong></h1>
+    <p class="secret-text">Create new contact and keep them safe !!!</p>
+
+    <form action="/submit" method="POST" enctype="multipart/form-data">
+
+      <div class="form-group">
+        <input type="text" class="form-control text-center" name="name" placeholder="Enter Name">
+        <input type="text" class="form-control text-center" name="phone" placeholder="Enter Phone No">
+        <input type="text" class="form-control text-center" name="email" placeholder="Enter Email ID">
+        <input type="file" class="form-control text-center" accept="image/*" name="photo">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+  </div>
+</div>
+<%- include('partials/footer') %>
