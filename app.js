@@ -153,6 +153,17 @@ app.get("/Createpdf", async function(req, res) {
   console.log("pdf created successfully");
 });
 
+app.post("/screenshot", async function(req, res) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(req.body.url,{waitUntil: 'networkidle0'});
+  const buffer = await page.screenshot({fullPage : true});
+  res.set('Content-Type', 'image/png');
+  res.send(buffer);
+  await browser.close();
+  console.log("screenshot taken successfully");
+});
+
 app.get("/submit", function(req, res) {
   if (req.isAuthenticated()) {
     res.render("submit");
