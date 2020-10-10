@@ -29,7 +29,12 @@
       <div class="row">
         <div class="col-xs-6">
           <div class="icon">
-            <img src="/images/ph2.jpg" alt="" height="300px" width="400px">
+            <!-- <img src="/images/ph2.jpg" alt="" height="300px" width="400px"> -->
+            <%if(data){%>
+            <div class="text-center">
+            <img src="<%=data%>" alt="" style="width:400px; height:400px;">
+             </div>
+             <%}%>
             </span></div>
           <!-- <img src="phnimg4.jpg" class="img-circle" alt="" width="380" height="380"> -->
         </div>
@@ -48,7 +53,6 @@
     </div>
   </div>
 </div>
-
 <!-- AK -->
 
 <%- include('partials/footer') %>

@@ -12,6 +12,8 @@ const multer = require('multer');
 const path = require('path');
 const puppeteer = require('puppeteer')
 const mustacheExpress = require('mustache-express');
+//QR code
+const QRCode = require('qrcode');
 
 const nexmo = new Nexmo({
   apiKey: "6982052c",
@@ -62,7 +64,7 @@ app.use(passport.session());
 mongoose.connect("mongodb://localhost:27017/contactsDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
-},()=> console.log('Successfully connected to local database'));
+}, () => console.log('Successfully connected to local database'));
 
 // mongoose.connect("mongodb+srv://admin-anubhavg:T-0101@myfirstdatabase.ewcnv.mongodb.net/contactsDB",
 // {useNewUrlParser:true,
@@ -101,7 +103,16 @@ passport.deserializeUser(function(id, done) {
 
 app.get("/home", function(req, res) {
   // res.render("loader");
-  res.render("home");
+  QRCode.toDataURL('Welcome to the PhoneBook-Diary',{errorCorrectionLevel:'L'},function (err, url) {
+  if(err){
+    console.log(err);
+    res.render("home",{data:''});
+  }
+  else{
+    console.log("qr code generated successfully");
+    res.render("home",{data:url});
+  }
+  });
 });
 
 app.get("/", function(req, res) {
@@ -110,7 +121,11 @@ app.get("/", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
-  res.render("login");
+  res.render("login",{ isAdded : false });
+});
+
+app.get("/login/true", function(req, res) {
+  res.render("login",{  isAdded : true });
 });
 
 app.get("/register", function(req, res) {
@@ -121,7 +136,37 @@ app.get("/secrets", function(req, res) {
   User.findById(req.user.id, function(err, foundUsers) {
     if (!err) {
       if (foundUsers) {
-        res.render("secrets", {
+        QRCode.toDataURL(foundUsers.username,{errorCorrectionLevel:'H'},function (err, url) {
+        if(err){
+          console.log(err);
+          // res.render("home",{data:''});
+          res.render("secrets", {
+            usersWithSecrets: foundUsers,
+            data:''
+          });
+        }
+        else{
+          console.log("qr code generated successfully");
+          // res.render("home",{data:url});
+          res.render("secrets", {
+            usersWithSecrets: foundUsers,
+            data:url
+          });
+        }
+        });
+        // res.render("secrets", {
+        //   usersWithSecrets: foundUsers
+        // });
+      }
+    }
+  });
+});
+
+app.get('/export/data/:user_id', (req, res) => {
+  User.findById(req.params.user_id, function(err, foundUsers) {
+    if (!err) {
+      if (foundUsers) {
+        res.render("secretsPdf", {
           usersWithSecrets: foundUsers
         });
       }
@@ -129,24 +174,16 @@ app.get("/secrets", function(req, res) {
   });
 });
 
-app.get('/export/data/:user_id', (req, res) => {
-    User.findById(req.params.user_id, function(err, foundUsers) {
-      if (!err) {
-        if (foundUsers) {
-          res.render("secretsPdf", {
-            usersWithSecrets: foundUsers
-          });
-        }
-      }
-    });
-});
-
 app.get("/Createpdf", async function(req, res) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('http://localhost:3000/export/data/'+req.user.id,{waitUntil: 'networkidle0'});
+  await page.goto('http://localhost:3000/export/data/' + req.user.id, {
+    waitUntil: 'networkidle0'
+  });
   // await page.pdf({path: __dirname + '/public/pdf/medium.pdf', format: 'A4'});
-  const buffer = await page.pdf({format: 'A4'});
+  const buffer = await page.pdf({
+    format: 'A4'
+  });
   res.type('application/pdf');
   res.send(buffer);
   await browser.close();
@@ -156,8 +193,12 @@ app.get("/Createpdf", async function(req, res) {
 app.post("/screenshot", async function(req, res) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(req.body.url,{waitUntil: 'networkidle0'});
-  const buffer = await page.screenshot({fullPage : true});
+  await page.goto(req.body.url, {
+    waitUntil: 'networkidle0'
+  });
+  const buffer = await page.screenshot({
+    fullPage: true
+  });
   res.set('Content-Type', 'image/png');
   res.send(buffer);
   await browser.close();
@@ -259,7 +300,7 @@ app.post("/register", function(req, res) {
       res.redirect("/register");
     } else {
       passport.authenticate("local")(req, res, function() {
-        res.render("success-register");
+        res.redirect("/login/true");
       });
     }
   });
@@ -275,6 +316,10 @@ app.post("/login", function(req, res) {
       passport.authenticate("local")(req, res, function() {
         res.redirect("/secrets");
       });
+    }
+    else{
+      console.log(err);
+      res.redirect("/login");
     }
   });
 });
