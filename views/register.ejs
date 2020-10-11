@@ -433,7 +433,7 @@
   <div class="container">
     <div class="overlay" id="overlay">
       <div class="sign-in" id="sign-in">
-        <h1>Welcome Back!</h1>
+        <h1>Hey! New User</h1>
         <p>To keep connected with us please register yourself</p>
       </div>
       <div class="sign-up" id="sign-up">
@@ -446,6 +446,7 @@
       <div class="sign-up" id="sign-up-info">
         <h1>Create Account</h1>
         <form id="sign-up-form" action="/register" method="POST">
+          <input type="text" placeholder="Name" name="name"/>
           <input type="email" placeholder="Username" name="username"/>
           <input type="password" placeholder="Password" name="password"/>
           <button class="control-button up">Sign Up</button>

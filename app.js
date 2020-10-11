@@ -14,6 +14,7 @@ const puppeteer = require('puppeteer')
 const mustacheExpress = require('mustache-express');
 //QR code
 const QRCode = require('qrcode');
+const nodemailer = require('nodemailer');
 
 const nexmo = new Nexmo({
   apiKey: "6982052c",
@@ -75,6 +76,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
 const userSchema = new mongoose.Schema({
+  name: String,
   username: String,
   password: String,
   array: [{
@@ -103,7 +105,9 @@ passport.deserializeUser(function(id, done) {
 
 app.get("/home", function(req, res) {
   // res.render("loader");
-  QRCode.toDataURL('Welcome to the PhoneBook-Diary',{errorCorrectionLevel:'L'},function (err, url) {
+  var homeMessage="Hello everyone!!!"+"\n\n";
+  homeMessage=homeMessage+"Welcome to the PhoneBook-Diary."+"\n"+"In this website, one can easily add their contact card information to this and get rid of saving contacts to their phone. Their data will be saved to our database so that they can see their saved information. They will get features like uploading photo,saving email, phone no and many more like this. It will be a live website which can accessed from anywhere.";
+  QRCode.toDataURL(homeMessage,{errorCorrectionLevel:'L'},function (err, url) {
   if(err){
     console.log(err);
     res.render("home",{data:''});
@@ -132,15 +136,58 @@ app.get("/register", function(req, res) {
   res.render("register");
 });
 
+app.get("/email", function(req, res) {
+  res.render("email");
+});
+
+app.post("/email", function(req, res) {
+
+  const transporter = nodemailer.createTransport({
+  service: req.body.service,
+  auth: {
+    user: req.body.ymail,
+    pass: req.body.ymailp
+  }
+  });
+
+  const mailOptions = {
+    from: req.body.ymail,
+    to: req.body.smail,
+    subject: req.body.subject,
+    text: req.body.message
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+      res.redirect("/email");
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.redirect("/secrets");
+    }
+  });
+});
+
 app.get("/secrets", function(req, res) {
   User.findById(req.user.id, function(err, foundUsers) {
     if (!err) {
       if (foundUsers) {
-        QRCode.toDataURL(foundUsers.username,{errorCorrectionLevel:'H'},function (err, url) {
+        var message="Hi! "+foundUsers.name+"\n"+"Welcome to our PhoneBook Diary"+"\n\n"+
+        "Your Username: "+foundUsers.username+"\n\n"+
+        "Promote our website by informing others to register themselves to our site.Keep using the site and save you contacts secretly"+
+        "\n\n"+"Remember! Don't share your secrets to anyone"+"\n\n";
+        message=message+"Your Contacts: \n";
+        foundUsers.array.forEach(function(x,i){
+          var a=(i+1)+"\n";
+          a=a+"Name: "+x.name+"\n"+"Email: "+x.email+"\n"+"Contact No: "+x.phone+"\n\n";
+          message=message+a;
+        });
+        QRCode.toDataURL(message,{errorCorrectionLevel:'H'},function (err, url) {
         if(err){
           console.log(err);
           // res.render("home",{data:''});
           res.render("secrets", {
+            name: foundUsers.name,
             usersWithSecrets: foundUsers,
             data:''
           });
@@ -149,6 +196,7 @@ app.get("/secrets", function(req, res) {
           console.log("qr code generated successfully");
           // res.render("home",{data:url});
           res.render("secrets", {
+            name: foundUsers.name,
             usersWithSecrets: foundUsers,
             data:url
           });
@@ -294,6 +342,7 @@ app.get("/logout", function(req, res) {
 
 app.post("/register", function(req, res) {
   User.register({
+    name: req.body.name,
     username: req.body.username
   }, req.body.password, function(err, user) {
     if (err) {
