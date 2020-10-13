@@ -117,6 +117,7 @@ app.get("/home", function(req, res) {
     res.render("home",{data:url});
   }
   });
+  // res.render("home2");
 });
 
 app.get("/", function(req, res) {
