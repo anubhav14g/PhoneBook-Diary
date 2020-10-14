@@ -143,16 +143,19 @@ app.get("/email", function(req, res) {
 
 app.post("/email", function(req, res) {
 
+  const testAccount = nodemailer.createTestAccount();
+
   const transporter = nodemailer.createTransport({
-  service: req.body.service,
+  // service: req.body.service,
+  host: "smtp.ethereal.email",
   auth: {
-    user: req.body.ymail,
-    pass: req.body.ymailp
+    user: testAccount.user,
+    pass: testAccount.pass,
   }
   });
 
   const mailOptions = {
-    from: req.body.ymail,
+    from: "anubhav1408sks@gmail.com",
     to: req.body.smail,
     subject: req.body.subject,
     text: req.body.message
