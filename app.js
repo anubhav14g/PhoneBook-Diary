@@ -62,15 +62,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/contactsDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, () => console.log('Successfully connected to local database'));
+// mongoose.connect("mongodb://localhost:27017/contactsDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }, () => console.log('Successfully connected to local database'));
 
-// mongoose.connect("mongodb+srv://admin-anubhavg:T-0101@myfirstdatabase.ewcnv.mongodb.net/contactsDB",
-// {useNewUrlParser:true,
-// useUnifiedTopology:true},
-// ()=> console.log('Successfully connected to cloud database'));
+mongoose.connect("mongodb+srv://admin-anubhavg:T-0101@myfirstdatabase.ewcnv.mongodb.net/contactsDB",
+{useNewUrlParser:true,
+useUnifiedTopology:true},
+()=> console.log('Successfully connected to cloud database'));
 
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
