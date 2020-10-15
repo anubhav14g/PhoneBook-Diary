@@ -1,227 +1,189 @@
-*{
-  max-width: 185%;
-     margin: 0px;
-     padding: 0px;
-     overflow:x hidden;
-    scroll-behavior: smooth;
-}
-
-#home , #user, #shopkeeper{
-  font-size: 16px;
-  font-family: 'Times New Roman', Times, serif;
-
-}
-
-#home:hover, #user:hover, #shopkeeper:hover{
-  background-color: #001aff;
-  color: #000;
-}
-
-#savecontact{
-  font-size: 22px;
-  font-weight: bold;
-  font-family: 'Times New Roman', Times, serif;
-  color: #ff0000;
-
-}
-.icon{
-  font-size: 250px;
-  color: #000ece;
-}
-#reg{
-  background-color: rgb(29, 223, 230);
-  color: #000;
-  /* text-shadow: 4px 4px 2px salmon ; */
-  font-size: 25px;
-  width: 400px;
-  font-weight: bold;
-  border-radius: 20px;
-}
-
-#log{
-
-  color: #000;
-  background-color: rgb(24, 168, 60);
-  /* text-shadow: 4px 4px 2px salmon ; */
-  font-size: 25px;
-  font-weight: bold;
-  width: 400px;
-  border-radius: 20px;
-}
-
-#log2{
-    font-size: 22px;
-    width: 370px;
-}
-
-.homie{
-  background-color: black;
-  width: 100vw;
-  height: 600px;
-  margin-left: -20%;
-  margin-top: -50px;
-  background-image: url(/images/Black-Desert.jpg);
-  background-position: center;
-  background-size: cover;
-  margin-bottom: -50px;
-  /* box-shadow: 1px 1px 2px black, 1px 1px 5px red,1px 1px 10px red,1px 1px 15px red; */
-}
-
-#log:hover,#reg:hover{
-  background-color: rgb(255, 255, 255);
-  color: rgb(255, 2, 2);
-
-}
 
 body {
-  /* background-color: #E8ECEF; */
-  background-color: rgb(255, 255, 255);
-
-
-}
-
-.centered {
-    /* padding-top: 200px; */
-    text-align: center;
-}
-
-.secret-text {
+  font-family: "Montserrat";
   text-align: center;
-  font-size: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat-Bold";
+}
+
+p {
+  color: #8f8f8f;
+}
+
+/* Headings */
+
+.big-heading {
+  font-family: "Montserrat-Black";
+  font-size: 3.5rem;
+  line-height: 1.5;
+}
+
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+/* Containers */
+
+.container-fluid{
+  padding: 7% 15%;
+}
+
+/* Sections */
+
+.colored-section {
+  background-color: #08d9d6;
   color: #fff;
-  background-color: #000;
 }
 
-.header {
-  background-color: #f5ba13;
-  margin: auto -16px;
-  padding: 16px 32px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+.white-section {
+  background-color: #fff;
 }
 
-.container-fluid {
-    padding-top: 70px;
-    padding-bottom: 70px;
-}
+/* Navigation Bar */
 
 .navbar {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border: 0;
-    border-radius: 0;
-    margin-bottom: 0;
-    font-size: 12px;
-    letter-spacing: 5px;
-}
-.navbar-nav  li a:hover {
-    color: #1abc9c;
+  padding: 0 0 4.5rem;
 }
 
-.footer-padding {
-	padding-bottom: 60px;
+.navbar-brand {
+  font-family: "Ubuntu";
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
-.footer {
-  color: red;
-	position: fixed;
-  text-align: center;
-  font-size: 18px;
-	bottom: 0;
-	width: 100%;
-	height: 60px;
-	background-color: #000000;
+.nav-item {
+  padding: 0 18px;
 }
 
-.footer p {
-	margin-top: 25px;
-	font-size: 12px;
+.nav-link {
+  font-size: 1.2rem;
+  font-family: "Montserrat-Light";
+}
+
+/* Buttons */
+
+.download-button {
+  margin: 5% 3% 5% 0;
+}
+
+/* Title Section */
+
+#title {
+  background-color: #08d9d6;
   color: #fff;
-}
-#loginlogo{
-  color: whitesmoke;
-  font-size: 80px;
-  margin-left: 145px;
-}
-.card {
-  border-radius: 25px;
-  position: relative;
-  padding: 25px 15px;
-  background-color: #000000;
-  background-image: url(/images/back.jpg);
-  background-position: center;
-  background-size: cover;
-  margin: 20px;
-  margin-left: 400px;
-  height: 300px;
-  box-shadow: 0 2px 5px #ccc;
   text-align: left;
-  width: 400px;
-  height: 480px;
-  color: whitesmoke;
-  font-size: 25px;
 }
 
-#logo{
-  font-size: 50px;
-  color: rgb(0, 26, 255);
+#title .container-fluid {
+  padding: 3% 15% 7%;
 }
 
-.api{
-  color: whitesmoke;
-  font-family: serif;
-  font-size: 30px;
-  text-align: center;
-  margin-top: 0;
-}
+/* Title Image */
 
-
-.nbar{
-  font-size: 24px;
-  justify-content: end;
-
-}
-.top {
-  border-radius: 25px 25px 0 0;
-  height: 100px;
-  width: 100%;
-  background-color: #00cec9;
+.title-image {
+  width: 60%;
+  transform: rotate(25deg);
   position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
+  right: 0%;
 }
 
-.name {
-  font-size: 2em;
-  color: #2d3436;
-  display: flex;
-  flex: 1;
-  margin: 10% 20px 0;
+/* Features Section */
+
+#features {
+  position: relative;
 }
 
-.card img {
-  margin: 30px 20px 0 0;
+.feature-title {
+  font-size: 1.5rem;
 }
 
-.circle-img {
-  border-radius: 50%;
-  border: 7px solid #fff;
-  width: 120px;
-  height: 120px;
+.feature-box {
+  padding: 4.5%;
 }
 
-.bottom {
-  margin-top: 120px;
+.icon {
+  color: #08d9d6;
+  margin-bottom: 1rem;
 }
 
-.info {
-  margin: 20px 0;
-  color: #1a7e76;
+.icon2 {
+  font-size: 15em;
 }
 
-.disp{
-  color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  text-shadow: 1px 1px 2px rgb(0, 255, 213),1px 1px 3px red, 1px 1px 5px violet,1px 1px 10px blue , 1px 1px 1px whitesmoke,1px 1px 2px whitesmoke,
-  2px 2px 4px whitesmoke, 2px 2px 7px whitesmoke, 1px 1px 10px whitesmoke,1px 1px 13px ghostwhite;
+.icon3 {
+  font-size: 10em;
+  text-align: center;
+}
+
+.icon:hover {
+  color: #ff4c68;
+}
+
+/* Testimonial Section */
+
+#testimonials {
+  background-color: #08d9d6;
+}
+
+.testimonial-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.testimonial-image {
+  width: 10%;
+  border-radius: 100%;
+  margin: 20px;
+}
+
+
+#press {
+  background-color: #08d9d6;
+  padding-bottom: 3%;
+}
+
+.press-logo {
+  width: 15%;
+  margin: 20px 20px 50px;
+}
+
+/* Pricing Section */
+
+#pricing {
+  padding: 100px;
+}
+
+.price-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.pricing-column {
+  padding: 3% 2%;
+}
+
+/* CTA Section */
+
+
+/* Footer Section */
+
+
+.social-icon {
+  margin: 20px 10px;
+  font-size: 3em;
+}
+
+@media (max-width: 1028px) {
+
+  #title {
+    text-align: center;
+  }
+
+  .title-image {
+    position: static;
+    transform: rotate(0);
+  }
 }
