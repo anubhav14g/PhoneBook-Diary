@@ -230,7 +230,7 @@ app.get("/Createpdf", async function(req, res) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://sheltered-atoll-81113.herokuapp.com/export/data/' + req.user.id, {
-    waitUntil: 'networkidle0'
+    waitUntil: 'networkidle0', timeout: 60
   });
   // await page.pdf({path: __dirname + '/public/pdf/medium.pdf', format: 'A4'});
   const buffer = await page.pdf({
