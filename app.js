@@ -34,11 +34,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(express.static("public"));
+app.use(express.static( __dirname + "/public"));
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null,'/public/stores/images');
+    cb(null, __dirname + '/public/stores/images');
   },
 
   // By default, multer removes file extensions so let's add them back
