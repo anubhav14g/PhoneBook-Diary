@@ -38,7 +38,7 @@ app.use(express.static("public"));
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, __dirname + '/public/stores/images');
+    cb(null,'/public/stores/images');
   },
 
   // By default, multer removes file extensions so let's add them back
