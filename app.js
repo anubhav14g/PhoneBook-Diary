@@ -214,23 +214,34 @@ app.get("/secrets", function(req, res) {
   });
 });
 
-app.get('/export/data/:user_id', (req, res) => {
-  User.findById(req.params.user_id, function(err, foundUsers) {
-    if (!err) {
-      if (foundUsers) {
-        res.render("secretsPdf", {
-          usersWithSecrets: foundUsers
-        });
-      }
-    }
-  });
+app.get('/export/data/:user_id',async (req, res) => {
+  // User.findById(req.params.user_id, function(err, foundUsers) {
+  //   if (!err) {
+  //     if (foundUsers) {
+  //       res.render("secretsPdf", {
+  //         usersWithSecrets: foundUsers
+  //       });
+  //     }
+  //   }
+  // });
+  const user= await User.findById(req.params.user_id);
+  if(!user)
+  {
+    console.log(err);
+  }
+  else
+  {
+    res.render("secretsPdf", {
+            usersWithSecrets: foundUsers
+          });
+  }
 });
 
 app.get("/Createpdf", async function(req, res) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://sheltered-atoll-81113.herokuapp.com/export/data/' + req.user.id, {
-    waitUntil: 'networkidle0', timeout: 60
+    waitUntil: 'networkidle0'
   });
   // await page.pdf({path: __dirname + '/public/pdf/medium.pdf', format: 'A4'});
   const buffer = await page.pdf({
