@@ -17,8 +17,8 @@ const QRCode = require('qrcode');
 const nodemailer = require('nodemailer');
 
 const nexmo = new Nexmo({
-  apiKey: "6982052c",
-  apiSecret: "yBziy0vnEu0HbBuO",
+  apiKey: process.env.NEXMO_API_KEY,
+  apiSecret: process.env.NEXMO_API_SECRET,
 });
 
 // adding cookies and sessions
@@ -53,7 +53,7 @@ const upload = multer({
 
 // configuring session to save cookies
 app.use(session({
-  secret: "ThisIsTheSecretOfAnubhav",
+  secret: process.env.APP_SECRET,
   resave: false,
   saveUninitialized: true,
 }));
@@ -67,7 +67,7 @@ app.use(passport.session());
 //   useUnifiedTopology: true
 // }, () => console.log('Successfully connected to local database'));
 
-mongoose.connect("mongodb+srv://admin-anubhavg:T-0101@myfirstdatabase.ewcnv.mongodb.net/contactsDB",
+mongoose.connect(process.env.MONGODB_URL,
 {useNewUrlParser:true,
 useUnifiedTopology:true},
 ()=> console.log('Successfully connected to cloud database'));
@@ -254,14 +254,14 @@ app.get("/Createpdf", async function(req, res) {
 });
 
 app.post("/screenshot", async function(req, res) {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+  const browser = await puppeteer.launch().catch(err);
+  const page = await browser.newPage().catch(err);
   await page.goto(req.body.url, {
     waitUntil: 'networkidle0'
   });
   const buffer = await page.screenshot({
     fullPage: true
-  });
+  }).catch(err);
   res.set('Content-Type', 'image/png');
   res.send(buffer);
   await browser.close();
